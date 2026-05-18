@@ -1,0 +1,10 @@
+/target/
+/test-output/
+/Screenshots/
+/logs/
+/.idea/
+/.settings/
+/bin/
+*.class
+*.log
+*.iml
