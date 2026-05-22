@@ -1,84 +1,48 @@
-package qumu;
-
-import java.util.List;
+package qumu.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import qumu.baseclass.BasePage;
+import qumu.utils.Log;
+
+import java.util.List;
 
 public class CartPage extends BasePage {
 
     public CartPage() {
-
-        PageFactory.initElements(driver, this);
-
+        PageFactory.initElements(getDriver(), this);
     }
-
-    // Locators for cart page
-
-    @FindBy(className = "cart_contents_container")
-    WebElement cartContainer;
 
     @FindBy(className = "cart_quantity")
-    List<WebElement> quantityList;
+    private List<WebElement> quantityList;
 
     @FindBy(id = "checkout")
-    WebElement checkoutButton;
-
-    // Validation Methods
-    
-    public boolean isCartPageDisplayed() {
-
-        waitForElement(cartContainer);
-
-        return cartContainer.isDisplayed();
-
-    }
-
-    // Verify Quantity = 1
+    private WebElement checkoutButton;
 
     public boolean verifyAllItemQuantityIsOne() {
-    	
-    	Log.logger.info("Verifying item quantities");
-
+        Log.logger.info("Verifying item quantities");
         for (WebElement qty : quantityList) {
-
             if (!qty.getText().equals("1")) {
-
                 return false;
-
             }
         }
-
         return true;
-
     }
 
-    // Remove Item Dynamically
-
     public void removeItem(String itemName) {
-    	Log.logger.info("Removing item: " + itemName);
-
+        Log.logger.info("Removing item: " + itemName);
         String xpath =
                 "//div[text()='" + itemName + "']" +
                 "/ancestor::div[@class='cart_item']" +
                 "//button[contains(text(),'Remove')]";
-
-        WebElement removeButton =
-                driver.findElement(By.xpath(xpath));
-
+        WebElement removeButton = getDriver().findElement(By.xpath(xpath));
         click(removeButton);
-
     }
-
-    // Click Checkout
 
     public void clickCheckoutButton() {
-    	Log.logger.info("Proceeding to Checkout");
-
+        Log.logger.info("Proceeding to checkout");
         click(checkoutButton);
-
     }
-
 }

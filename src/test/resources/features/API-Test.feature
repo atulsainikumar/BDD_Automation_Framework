@@ -3,9 +3,9 @@ Feature: API test
 
 
   Scenario: Should see LIST USERS of all existing users
-    Given I get the default list of users for on 1st page
-    When I get the list of all users within every page
-    Then I should see total users count equals the number of user ids
+    Given I request the user list and note the total count
+    When I collect users across all pages
+    Then the number of collected user ids should equal the total count
 
 
   Scenario: Should see SINGLE USER data
@@ -32,15 +32,11 @@ Feature: API test
 
 
   Scenario: LOGIN - SUCCESSFUL by a user
-    Given I login unsuccessfully with the following data
-      | Email              | Password   |
-      | eve.holt@reqres.in | cityslicka |
+    Given I send a login request with valid credentials
     Then I should get a response code of 200
 
   Scenario: LOGIN - UNSUCCESSFUL by a user
-    Given I login unsuccessfully with the following data
-      | Email              | Password |
-      | eve.holt@reqres.in |          |
+    Given I send a login request with missing password
     Then I should get a response code of 400
     And I should see the following response message:
       | "error": "Missing password" |

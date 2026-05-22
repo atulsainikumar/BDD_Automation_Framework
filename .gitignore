@@ -8,3 +8,6 @@
 *.class
 *.log
 *.iml
+.classpath
+.project
+src/test/resources/browserDirectory/

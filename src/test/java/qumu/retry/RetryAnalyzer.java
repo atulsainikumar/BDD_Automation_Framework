@@ -1,7 +1,8 @@
-package qumu;
+package qumu.retry;
 
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
+import qumu.utils.Log;
 
 public class RetryAnalyzer implements IRetryAnalyzer {
 
@@ -11,20 +12,11 @@ public class RetryAnalyzer implements IRetryAnalyzer {
 
     @Override
     public boolean retry(ITestResult result) {
-
         if (count < MAX_RETRY) {
-
             count++;
-
-            Log.logger.info(
-                    "Retrying Test: "
-                            + result.getName()
-                            + " | Retry Count: "
-                            + count);
-
+            Log.logger.info("Retrying test: " + result.getName() + " | Attempt: " + count);
             return true;
         }
-
         return false;
     }
 }
